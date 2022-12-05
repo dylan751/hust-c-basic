@@ -1,0 +1,14 @@
+4
+1	Bach khoa
+2	Xay dung
+3	Kinh te
+4	Thuy loi
+Vong 1
+1	2
+3	4
+Vong 2
+1	3
+2	4
+Vong 3
+1	4
+2	3

@@ -1,0 +1,8 @@
+Gửi mã nguồn và chương trình sau khi chấm vào: cprogrambasic@gmail.com
+
+Tiêu đề:
+2020-1 <dấu cách> MSSV <dấu cách> Tên sinh viên.
+
+Sinh viên được chấm bài xong, gửi mail xong ở lại giám sát việc gửi mail của sinh viên tiếp theo, để nguyên không tắt máy, sau đó ra ngoài nghỉ đợi công tác chấm thi kết thúc.
+
+Kết thúc phiên chấm thi, sinh viên vào lớp tắt máy. Nghe giảng viên tổng kết trước khi rời phòng thi.

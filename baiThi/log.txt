@@ -1,0 +1,11 @@
+Nha_rieng 6 12
+C1_BKHN 8 15
+Coffee_HighLand 8 47
+B1_BKHN 9 12
+Nha_an_1-5 11 57
+Hoi_truong_C2 12 55
+B1_BKHN 14 12
+TC_BKHN 15 0
+Nha_rieng 17 5
+Coffee_HighLand 20 15
+Nha_rieng 21 50

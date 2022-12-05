@@ -1,0 +1,280 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<stdio_ext.h>
+
+typedef struct{
+  char mssv[11];
+  char name[31];
+  double score;
+}elementType;
+
+typedef struct node_t{
+  elementType element;
+  struct node_t *next;
+}node;
+
+void printData(node *p);
+elementType getData();
+
+//1. Ham tao node moi
+node *makeNewNode(elementType element){
+  node *new = (node *)malloc(sizeof(node));
+  new->element = element;
+  new->next = NULL;
+  return new;
+}
+
+//2. Ham nhap du lieu vao
+elementType readNode(){
+  elementType tmp;
+  __fpurge(stdin);
+  printf("Input MSSV: ");
+  scanf("%[^\n]s", tmp.mssv);
+  __fpurge(stdin);
+  printf("Input name: ");
+  scanf("%[^\n]s", tmp.name);
+
+  printf("Input score: ");
+  scanf("%lf", &tmp.score);
+  
+  return tmp;
+}
+
+//3. Hien thi noi dung cua node
+elementType displayNode(node* p){
+  elementType tmp = p->element;
+  if(p == NULL){
+    printf("Loi con tro NULL\n");
+    return tmp;
+  }
+
+  printf("%-20s%-20s%-10.2lf\n", tmp.mssv, tmp.name, tmp.score);
+}
+
+//4. Duyet danh sach
+void traverseList(node *root){
+  node *p;
+  for (p = root; p != NULL; p = p->next){
+    displayNode(p);
+  }
+}
+
+//5. Them 1 element vao dau danh sach
+void insertAtHead(elementType element, node **root, node **cur, node **prev){
+  node *new = makeNewNode(element);
+  new->next = *root;
+  *root = new;
+  *cur = *root;
+}
+
+//6. Them 1 element vao sau con tro CUR
+void insertAfterCurrent(elementType element, node **root, node **cur, node **prev){
+  node *new = makeNewNode(element);
+  if (*root == NULL){
+    *root = new;
+    *cur = *root;
+  }
+  else if (*root != NULL && *cur == NULL){
+    printf("Current pointer is NULL!\n");
+    return;
+  }
+  else{
+    new->next = (*cur)->next;
+    (*cur)->next = new;
+    *prev = *cur;
+    *cur = (*cur)->next;
+  }
+}
+
+//7. Them 1 element vao truoc con tro CUR
+void insertBeforeCurrent(elementType element, node **root, node **cur, node **prev){
+  /* node tmp = root;
+     while(tmp != NULL && tmp->next != cur && cur != NULL){
+        tmp = tmp->next;
+     }
+     prev = tmp;
+   */
+
+  node *new = makeNewNode(element);
+  if (*root == NULL){
+    *root = new;
+    *cur = *root;
+    *prev = NULL;
+  }
+  else{
+    new->next = *cur;
+    if (*cur == *root){
+      *root = new;
+    }
+    else{
+      (*prev)->next = new;
+    }
+    *cur = new;
+  }
+}
+
+//8. Xoa ca danh sach
+void deleteAllNode(node **root){
+  node *to_free;
+  
+  to_free = *root;
+  while(to_free != NULL){
+    (*root) = (*root)->next;
+    free(to_free);
+    to_free = *root;
+  }
+}
+
+//9. Xoa node dau tien trong danh sach
+void deleteFirstElement(node **root, node **cur, node **prev){
+  if (*root == NULL){
+    printf("Con tro root NULL\n");
+    return;
+  }
+
+  node *del;
+  del = *root;
+  if(del == NULL)
+    return;
+  
+  *root = del->next;
+  *cur = *root;
+  *prev = NULL;
+  free(del);
+}
+
+//10. Xoa phan tu CUR
+void deleteCurrentElement(node **root, node **cur, node **prev){
+  if (*cur == NULL)
+    return;
+  if (*cur == *root)
+    deleteFirstElement(root, cur, prev);
+  else{
+    (*prev)->next = (*cur)->next;
+    free(*cur);
+    *cur = (*prev)->next;
+    if(*cur == NULL)
+      *cur = *root;
+    /*  cur = root; */ 
+  }
+}
+
+//11. Dao nguoc danh sach
+node *reverseList(node **root){
+  node *cur, *prev;
+  cur = NULL;
+  prev = NULL;
+  while (*root != NULL){
+    cur = *root;
+    *root = (*root)->next;
+    cur->next = prev;
+    prev = cur;
+  }
+  return prev;
+}
+
+//12. Them element vao vi tri bat ky
+node *insertAtPosition(elementType ad, int n, node **root, node **cur, node **prev){
+  *cur = *root;
+  for (int i = 0; i < n; i++){
+    *prev = *cur;
+    *cur = (*cur)->next;
+  }
+
+  node *new = (node *)malloc(sizeof(node));
+  new->element = ad;
+  new->next = (*cur)->next;
+  (*cur)->next = new;
+  if (*root == NULL)
+    *root = *cur;
+  if (n == 0)
+    insertAtHead(ad, root, cur, prev);
+  *prev = *cur;
+  *cur = (*cur)->next;
+  return new;
+}
+
+//13. Xoa element o vi tri bat ky
+node *deleteAtPosition(int n, node **root, node **cur, node **prev){
+  if (*root == NULL)
+    return *root;
+
+  *cur = *root;
+  *prev = NULL;
+  for (int i = 0; i < n; i++){
+    *prev = *cur;
+    *cur = (*cur)->next;
+  }
+
+  if (*cur == *root){
+    deleteFirstElement(root, cur, prev);
+    return *root;
+  }
+
+  node *temp = *cur;
+  (*prev)->next = (*cur)->next;
+  *cur = (*cur)->next;
+  if(*cur == NULL){
+    *cur = *root;
+    *prev = NULL;
+  }
+  free(temp);
+  return *root;
+}
+
+// node *spilt(node *r, int n1, int n2)
+// {
+//   node *root1 = NULL;
+//   cur = r;
+//   for (int i = 0; i < n1; i++)
+//   {
+//     prev = cur;
+//     cur = cur->next;
+//   }
+
+//   root1 = cur;
+//   for (int i = 1; i < n2; i++)
+//   {
+//     cur = cur->next;
+//   }
+
+//   prev->next = cur->next;
+//   cur->next = NULL;
+//   cur = prev->next;
+//   return root1;
+// }
+
+// void save2Text(node *r, char *filename)
+// {
+//   FILE *f = fopen(filename, "w");
+//   if (f == NULL)
+//   {
+//     printf("Khong the mo file %s\n", filename);
+//     return;
+//   }
+//   node *curr;
+//   for (curr = r; curr != NULL; curr = curr->next)
+//   {
+//     fprintf(f, "%s\t%d\t%d\t%g\t%d\n", (curr->element).model, (curr->element).memory, (curr->element).space, (curr->element).screen_size, (curr->element).price);
+//     printf("%s\t%d\t%d\t%g\t%d\n", (curr->element).model, (curr->element).memory, (curr->element).space, (curr->element).screen_size, (curr->element).price);
+//   }
+//   printf("Da luu file thanh cong!\n");
+//   fclose(f);
+// }
+
+//14. Save du lieu vao file .dat
+void save2Dat(node *root, char *filename){
+  FILE *fptr = fopen(filename, "wb");
+  if (fptr == NULL){
+    printf("Khong the mo file %s\n", filename);
+    return;
+  }
+  node *p;
+  int i = 0;
+  for (p = root; p != NULL; p = p->next){
+    i += fwrite(&(p->element), sizeof(elementType), 1, fptr);
+  }
+  printf("Da luu file thanh cong!\n");
+  fclose(fptr);
+}

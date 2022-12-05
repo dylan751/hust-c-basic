@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<string.h>
+#define CONSTANT 100
+
+typedef struct{
+  int line;
+  int page;
+}location;
+
+int main(int argc, char* argv[]){
+  if(argc != 2){
+    printf("Wrong Syntax! Should be: <string>");
+    return 1;
+  }
+  else{
+    char file_name[CONSTANT] = "tuDien.txt";
+    char str[CONSTANT];
+    FILE* fptr = fopen(file_name, "r");
+    if(fptr == NULL){
+      printf("Cannot open %s.", file_name);
+      return 1;
+    }
+    else{
+      fgets(str, 99, stdout);
+      printf("%", str);
+    }
+  }
+}

@@ -1,0 +1,181 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<stdio_ext.h>
+
+typedef struct
+{
+  int maSP;
+  char ten[40];
+  int gia;
+  int soLuong;
+} elementtype;
+
+typedef struct node{
+  elementtype ele;
+  struct node *prev;
+  struct node *next;
+} node;
+
+typedef node* doublelist;
+
+elementtype getData()
+{
+  elementtype new;
+  printf("Ma san pham: ");
+  scanf("%d", &new.maSP);
+  __fpurge(stdin);
+  printf("Ten san pham: ");
+  scanf("%s", new.ten);
+  printf("Gia san pham: ");
+  scanf("%d", &new.gia);
+  printf("So luong san pham: ");
+  scanf("%d", &new.soLuong);
+
+  return new;
+}
+
+void makeNullList(doublelist* root, doublelist* tail, doublelist* cur)
+{
+  *root = NULL;
+  *tail = NULL;
+  *cur = NULL;
+  return;
+}
+
+node *makeNewNode(elementtype ele){
+  node *new = (node *)malloc(sizeof(elementtype));
+  new->ele = ele;
+  new->prev = NULL;
+  new->next = NULL;
+  return new;
+}
+
+
+void append(elementtype ele,doublelist *root, doublelist *tail, doublelist *cur){
+  node *new = makeNewNode(ele);
+  if(*tail == NULL){
+    *root = new;
+    *tail = new;
+    *cur = new;
+  }
+  else{
+    (*tail)->next = new;
+    new->prev = *tail;
+    *tail = new;
+    *cur = *tail;
+  }
+}
+
+void import(doublelist *r, doublelist *t, doublelist *c)
+{
+	int n;
+	FILE *f = fopen("PhoneDB.dat", "rb");
+	if ((f = fopen("PhoneDB.dat", "rb")) == NULL)
+	{
+		printf("Khong the mo file PhoneDB.dat!\n");
+		return;
+	}
+
+	fseek(f, 0, SEEK_END);
+	n = ftell(f) / sizeof(elementtype);//So phan tu
+	rewind(f);
+	elementtype tmp;
+	for (int i = 0; i < n; i++)
+	{
+		fread(&tmp, sizeof(elementtype), 1, f);
+		append(tmp, r, t, c);
+	}
+
+	printf("\tImported!!!\n");
+	fclose(f);
+}
+
+void insertAtHead(elementtype ele, doublelist *root, doublelist *tail, doublelist *cur){
+  node *new = makeNewNode(ele);
+  if(*root == NULL){
+    *root = new;
+    *tail = new;
+    *cur = new;
+  }
+  else {
+    new->next = *root;
+    new->prev = NULL;
+    *root = new;
+    *cur = new;
+  }
+}
+
+
+void displayNode(node *p)
+{
+  printf("%-5d%-10d%-5d%-20s\n", (p->ele).maSP, (p->ele).gia, (p->ele).soLuong, (p->ele).ten);
+}
+
+void traverseListFromTail(node *tail)
+{
+  node *p;
+  for (p = tail; p != NULL; p = p->prev)
+  {
+    displayNode(p);
+  }
+}
+    
+void insertBeforeCurrent(elementtype ele, doublelist *root, doublelist *tail, doublelist *cur){
+  /* Node tmp = root;
+     while(tmp != NULL && tmp->next != cur && cur != NULL)
+     {
+        tmp = tmp->next;
+     }
+     prev = tmp;
+   */
+
+  node *new = makeNewNode(ele);
+  if (*root == NULL)
+  {
+    *tail = new;
+    *root = new;
+    *cur = new;
+  }
+  else
+  {
+    new->next = *cur;
+    if((*cur)->prev != NULL) (*cur)->prev->next = new;
+    else *root = new;
+    new->prev = NULL;
+    (*cur)->prev = new;
+    *cur = new;
+  }
+}
+
+void insertAfterCurrent(elementtype ele, doublelist *root, doublelist *tail, doublelist *cur)
+{
+  node *new = makeNewNode(ele);
+  if (*root == NULL)
+  {
+    *root = new;
+    *tail = new;
+    *cur = *root;
+  }
+  else
+  {
+    new->next = (*cur)->next;
+    (*cur)->next = new;
+    new->prev = (*cur);
+    if((*cur)->next != NULL) (*cur)->next->prev = new;
+    else *tail = new;
+    *cur = new;
+  }
+}
+
+void Delete_List(doublelist p, doublelist *root, doublelist *cur, doublelist *tail){
+  if(*root == NULL) printf("Empty List");
+  else {
+    if(p == *root) (*root) = (*root)->next;
+    else p->prev->next = p->next;
+    if(p->next != NULL) p->next->prev = p->prev;
+    else *tail = p->prev;
+
+    free(p);
+  }
+}

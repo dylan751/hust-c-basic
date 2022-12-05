@@ -1,0 +1,8 @@
+
+typedef ... elementtype;
+struct node_t{
+  elementtype element;
+  struct node_t *next;
+};
+typedef struct node_t node;
+node* root, cur, prev;

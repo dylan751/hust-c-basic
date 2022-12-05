@@ -1,0 +1,130 @@
+#include"singleLinkedList(BienCucBo).h"
+
+void inThongTin(elementType tmp, node **root, node **cur, node **prev){
+  FILE* fptr = fopen("bongda.txt", "r");
+  if(fptr == NULL){
+    printf("Cannot open bongda.txt!\n");
+    return;
+  }
+  
+  //elementType tmp;
+  
+
+  int n;//So doi bong
+  fscanf(fptr, "%d", &n);
+  int count = 0;
+  printf("%-5s%-20s%-10s%-14s%-14s\n", "ID", "Tendoibong", "Diem", "Sobanthang", "Sobanthua");
+  while(count < n){
+    fscanf(fptr, "%d\t%[^\n]s", &tmp.id, tmp.ten);
+    insertAtHead(tmp, root, cur, prev);
+    count++;
+  }
+
+  traverseList(*root);
+  fclose(fptr);
+}
+
+void inLichThiDau(node **root, node **cur, node** prev){
+  FILE* fptr = fopen("bongda.txt", "r");
+  if(fptr == NULL){
+    printf("Cannot open bongda.txt!\n");
+    return;
+  }
+
+  int n;//So doi bong
+  fscanf(fptr, "%d", &n);
+  int count = 0;
+  
+  elementType tmp;
+  while(count <= n){
+    fscanf(fptr, "%d\t%[^\n]s\t%d\t%d\t%d\n", &tmp.id, tmp.ten, &tmp.diem, &tmp.soBanThang, &tmp.soBanThua);
+    count++;
+  }
+
+  count = 0;
+  int i, k;
+  int x = 0;
+  node* p;
+  int a, b;//ID 2 doi dau voi nhau
+  printf("Nhap so luot thi dau trong 1 vong`: ");
+  scanf("%d", &k);
+  while(count <= n-1){//Duyet n-1 vong` dau'
+    fscanf(fptr, "Vong %d\n", &i);
+    printf("Vong %d\n", i);
+    while(x < k){
+      fscanf(fptr, "%d\t%d\n", &a, &b);
+      for(p = *root; p != NULL; p = p->next){
+	if(a == p->element.id){
+	  printf("%s - ", p->element.ten);
+	}
+	if(b == p->element.id){
+	  printf("%s\n", p->element.ten);
+	}
+      }
+    }
+    x = 0;
+    count++;
+  }
+
+  fclose(fptr);
+}
+
+int main(){
+  char choice;
+  node *root = NULL, *cur = NULL, *prev = NULL;
+  elementType tmp;
+  //Khoi tao
+  tmp.id = 0;
+  strcpy(tmp.ten, "\0");
+  tmp.diem = 0;
+  tmp.soBanThang = 0;
+  tmp.soBanThua = 0;
+  
+  while(1){
+    printf("           ---MENU---\n"
+	   "|1. In thong tin cac doi bong.  |\n"
+	   "|2. In thong tin lich thi dau.  |\n"
+	   "|3. Cap nhat ket qua vong dau.  |\n"
+	   "|4. Thong ke.                   |\n"
+	   "|5. Thoat.                      |\n");
+
+    __fpurge(stdin);
+    printf("Input your choice: ");
+    scanf("%c", &choice);
+
+    while(choice > '5' || choice < '1'){
+      __fpurge(stdin);
+      printf("Ivalid! Input your choice: ");
+      scanf("%c", &choice);
+    }
+
+    switch(choice){
+    case '1':{
+      inThongTin(tmp, &root, &cur, &prev);
+      break;
+    }
+
+    case '2':{
+      inLichThiDau(&root, &cur, &prev);
+      break;
+    }
+
+    case '3':{
+
+      break;
+    }
+
+    case '4':{
+
+      break;
+    }
+
+    case '5':{
+      exit(0);
+      break;
+    }
+
+    }
+  }
+  return 0;
+}

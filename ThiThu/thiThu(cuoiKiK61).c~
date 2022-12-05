@@ -1,0 +1,53 @@
+#include"cuoiKiK61.h"
+
+int main(){
+  char choice;
+  
+  while(1){
+    printf("           ---MENU---\n"
+	   "|1. In thong tin cac doi bong. |\n"
+	   "|2. In thong tin lich thi dau  |\n"
+	   "|3. Cap nhat ket qua vong dau. |\n"
+	   "|4. Thong ke.                  |\n"
+	   "|5. Thoat.                     |\n");
+
+    __fpurge(stdin);
+    printf("Input your choice: ");
+    scanf("%c", &choice);
+
+    while(choice > '5' || choice < '1'){
+      __fpurge(stdin);
+      printf("Ivalid! Input your choice: ");
+      scanf("%c", &choice);
+    }
+
+    switch(choice){
+    case '1':{
+
+      break;
+    }
+
+    case '2':{
+
+      break;
+    }
+
+    case '3':{
+
+      break;
+    }
+
+    case '4':{
+
+      break;
+    }
+
+    case '5':{
+
+      break;
+    }
+
+    }
+  }
+  return 0;
+}

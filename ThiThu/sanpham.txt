@@ -1,0 +1,10 @@
+10   Keo deo             15000     10        
+9    Chan trau           14500     16        
+8    Cafe                60000     4         
+7    Thit bo             17500     10        
+6    O mai               14500     15        
+5    Bim bim             30000     20        
+4    Tra sua             15000     45        
+3    Chan trau           40000     15        
+2    Dau an              15000     10        
+1    Tra sua             40000     10        

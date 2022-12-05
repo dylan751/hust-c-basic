@@ -1,0 +1,26 @@
+
+
+void LNR(treeType root){
+  nodeType* p;
+  while(root){
+    if((root->left) == NULL){
+      printf("%d", root->element);
+      root = root->right;
+    }
+    else{
+      p = root->left;
+      while(p->right && p->right != root){
+	p = p->right;
+      }
+      if(p->right == NULL){
+	p->right = root;
+	root = root->left;
+      }
+      else{
+	p->right = NULL;//cat duoi
+	printf("%d", root->element);
+	root = root->right;
+      }
+    }
+  }
+}

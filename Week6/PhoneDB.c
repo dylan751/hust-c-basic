@@ -1,0 +1,357 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdio_ext.h>
+#include<string.h>
+#define CONSTANT 100
+ 
+typedef struct Phone
+{
+   char model[CONSTANT];
+   char memory[CONSTANT];
+   double size;
+   double price ;
+}data;
+struct index
+{
+   data person;
+   struct index *next;
+};
+typedef struct index node_addr;
+ 
+node_addr*root,*cur,*prev;
+node_addr* make_new_node(data p)// ham cap phat bo nho
+{
+   node_addr*temp; // khai bao 1 nut
+   temp=(node_addr*)malloc(1*sizeof(node_addr));
+   temp->next=NULL;
+   temp->person=p;
+   return temp;
+}
+data input_phone()
+{
+   data p;
+   printf("Input Model :__");
+   scanf("%s",p.model);
+    printf("Phone memory :__");
+   scanf("%s", p.memory);
+    printf("Screen size:__");
+   scanf("%lf", &p.size);
+   while(p.size < 0)
+   {
+   printf("Error! the size must be > 0! Input again: ");
+   scanf("%lf", &p.size);
+   }
+ 
+   printf("Phone price:__");
+   scanf("%lf", &p.price);
+   while(p.price < 0)
+   {
+   printf("Error! the price must be > 0! Input again: ");
+   scanf("%lf", &p.price);
+   }
+    return p;
+}
+void displayNode(node_addr *p)
+{
+   if(p==NULL)
+   {
+       printf("Loi con tro NULL\n");
+       return ;
+   }
+   data tmp=p->person;
+   printf("%-25s %-7s %-14.1lf %-16.1lf \n",tmp.model,tmp.memory,tmp.size,tmp.price);
+}
+void AddtoHead(data p)
+{
+   node_addr*tmp=make_new_node(p);
+   if(root==NULL)
+   {
+       root=tmp;
+   }
+   else
+   {
+       tmp->next=root;
+       root=tmp;
+       cur=root;
+   }
+   return ;
+}
+ 
+void AddtoTail(data p)
+{
+   node_addr *tmp=make_new_node(p),*a;
+   if(root==NULL)
+   {
+       root=tmp;
+   }
+   else
+   {
+       a=root;
+       while(a->next!=NULL)
+       {
+           a=a->next;
+       }
+       a->next=tmp;
+       cur=tmp;
+   }
+   return ;
+}
+void Traversing ()
+{
+   node_addr*p;
+   p=root;
+   while(p!=NULL)
+   {
+       displayNode(p);
+       p=p->next;
+   }
+}
+int so1(FILE*input)
+{
+   int i=0;
+   data p;
+   while(fscanf(input,"%s %s %lf %lf",p.model,p.memory,&(p.size),&(p.price))!=EOF)
+   {
+      AddtoHead(p);
+   }
+   return 1;
+}
+void so2(FILE*input1)
+{
+    data *m,p;
+ 
+           while((int*)fread(m,sizeof(data),1,input1)!=NULL)
+           {
+               p=*m;
+               AddtoTail(p);
+           }
+          
+}
+ 
+void ClearData()
+{
+   node_addr*  to_free = root ;
+   while (to_free != NULL)
+   {
+   root = root->next;
+   free(to_free);
+   to_free = root;
+   }
+ 
+}
+void search()
+{
+   node_addr*p;
+   char*k=(char*)malloc(100*sizeof(char));
+   int i=0;
+   printf("Enter the phone model u wanna find :");
+   scanf("%s",k);
+   p=root;
+   while(p!=NULL)
+   {
+       if(strcasecmp(p->person.model,k)==0)
+       {
+           displayNode(p);
+           i++;
+       }
+       p=p->next;
+   }
+   if(i==0)
+   printf("Can't find the phone model u need !__");
+   free(k);
+}
+void searchprice()
+{
+   node_addr*p;
+   int i=0;
+   double k;
+   printf("Enter the price u wanna find :");
+   scanf("%lf",&k);
+   p=root;
+   while(p!=NULL)
+   {
+       if(k>p->person.price||k==p->person.price)
+       {
+           displayNode(p);
+           i++;
+       }
+       p=p->next;
+   }
+   if(i==0)
+   printf("Can't find the phone model with the price u want !__");
+}
+void exporttodat()
+{
+   FILE*output=fopen("PhoneDB.dat","wb");
+   node_addr*p;
+   p=root;
+   data*m;
+   while(p!=NULL)
+   {
+       strcpy(m->model,p->person.model);
+       strcpy(m->memory,p->person.memory);
+       m->price=p->person.price;
+       m->size=p->person.size;
+       fwrite(m,sizeof(data),1,output);
+       p=p->next;
+   }
+ 
+   fclose(output);
+}
+void insertBeforeCurrent(data p)
+{
+   node_addr* new = make_new_node(p);
+   if(root == NULL)
+   {
+   /*if there is no element*/
+   root = new;
+   cur = root;
+   prev=NULL;
+   }
+   else {
+     
+       new->next=cur;
+        /* if cur pointed to first element */
+       if (cur==root) {
+       /* nut moi them vao tro thanh dau danh sach */
+           root = new;
+       }
+       else prev->next = new;
+       cur = new;
+   }
+ 
+}
+void insertAfterCurrent(data p)
+{
+   node_addr* new = make_new_node(p);
+   if(root == NULL)
+   {
+   /*if there is no element*/
+   root = new;
+   cur = root;
+   }
+   else
+   {
+   if(cur == NULL)
+   {
+   return;
+   }
+   else
+   {
+   new->next = cur->next;
+   cur->next = new;
+   prev = cur; /*(neu muon de con tro prev luon dung truoc con tro cur) -> nen dung*/
+   cur = cur->next;
+   }
+   }
+}
+ 
+void ManualInsertion()
+{
+   int choice;
+   data p;
+   while(choice != 3)
+   {
+   printf("                ---Menu---\n"
+      "|1. Input one new model BEFORE current node.|\n"
+      "|2. Input one new model AFTER current node .|\n"
+      "|3. Exit.                                   |\n");
+   printf("Input your choice: ");
+   scanf("%d", &choice);
+   switch(choice)
+   {
+       case 1 :
+       {
+       p=input_phone();
+      
+       printf("%s/%s/%lf/%lf",p.model,p.memory,p.price,p.size);
+      
+       insertBeforeCurrent(p);
+       break;
+       }
+       case 2 :
+       {
+       p=input_phone();
+       insertAfterCurrent(p);
+       break;
+       }
+ 
+   }
+   }
+}
+int main()
+{
+   FILE*input,*input1,*output;
+  
+   input=fopen("PhoneDB.txt","r");
+   if(input==NULL)
+   {
+       printf("No such file or directory !");
+       return 0;
+   }
+   input1=fopen("PhoneDB.dat","rb");
+   if(input==NULL)
+   {
+       printf("No such file or directory !");
+       return 0;
+   }
+  
+   int i;
+   int m,n=0;
+   data*p;
+   p=(data*)malloc(1*sizeof(data));
+   while(m!=8)
+   {
+       printf("\nMenu\n1.Import Database from text file.\n2.Import Database from .dat file.\n3.Print all Database.\n4.Search for Phone Model.\n5.Search by Price.\n6.Export to Dat.\n7.Manual Insertion.\n8.Quit\n");
+       scanf("%d",&m);
+       switch(m)
+       {
+           case 1 :
+           if(n==0)
+           {
+               so1(input);
+               n++;
+           }
+           else
+           {
+               rewind(input);
+               ClearData();
+               so1(input);
+           }
+           break;
+           case 2 :
+           if(n==0)
+           {
+               so2(input1);
+               n++;
+           }
+           else
+           {
+               rewind(input1);
+               ClearData();
+               so2(input1);
+           }
+           break;
+           case 3 :
+           Traversing();
+           break;
+           case 4 :
+           search();
+           break;
+           case 5 :
+           searchprice();
+           break;
+           case 6 :
+           exporttodat();
+           break;
+           case 7 :
+           ManualInsertion();
+           break;
+       }
+   }
+   free(p);
+   fclose(input);
+   fclose(input1);
+}
+

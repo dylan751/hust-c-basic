@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include "ThuVienTruuTuong.h"
+
+int main(){
+  int n = 5;
+  elementtype tmp;
+  while(n){
+    tmp = readNode();
+    insertAtHead(tmp);
+    n--;
+  }
+  root = reverseList(root);
+
+  printf("---Result---\n");
+  traversingList();
+}

@@ -1,0 +1,14 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct {
+  char model[CONSTANT];
+  char memory_space[CONSTANT];
+  double screen_size;
+  double price;
+}phone;
+
+typedef struct node_t{
+  phone data;
+  struct node_t *next;
+}node;

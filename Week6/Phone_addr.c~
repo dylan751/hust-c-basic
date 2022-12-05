@@ -1,0 +1,34 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+/*---Declaration of address list---*/
+typedef struct address_t {
+  char name[20];
+  char tel[11];
+  char email[25];
+}address;
+
+typedef struct list_el{
+  address addr;
+  struct list_el *next;
+}node_addr;
+
+
+/*---Initialisation---*/
+node_addr *root, *cur;
+node_addr *prev;
+
+/*---Make new node---*/
+node_addr* makeNewNode(){
+  node_addr* new = (node_addr*)malloc(sizeof(node_addr));
+  strcpy((new->addr).name, "Nguyen Hai Duong");
+
+  new->next = NULL;
+  return new;
+}
+
+int main(){
+  root = makeNewNode();
+  cur = root;
+}

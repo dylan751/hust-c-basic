@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+#define MAX 100
+
+int main(int argc, char* argv[]){
+  char str[MAX];
+  if(argc != 4){
+    printf("Wrong Syntax! Should be: filemerge <file1> <file2> <file_merge>");
+    return 1;
+  }
+
+  FILE *fptr1, *fptr2, *fptr_out;
+  fptr1 = fopen(argv[1], "r");
+  if(fptr1 == NULL){
+    printf("Cannot open %s.", argv[1]);
+    return 1;
+  }
+  
+  fptr2 = fopen(argv[2], "r");
+  if(fptr2 == NULL){
+    printf("Cannot open %s.", argv[2]);
+    return 1;
+  }
+
+  fptr_out = fopen(argv[3], "w");
+  if(fptr_out == NULL){
+    printf("Cannot open %s.", argv[3]);
+    return 1;
+  }
+
+  while(fgets(str, MAX, fptr1) != NULL){
+    fputs(str, fptr_out);
+  }
+
+  while(fgets(str, MAX, fptr2) != NULL){
+    fputs(str, fptr_out);
+  }
+
+  fclose(fptr1);
+  fclose(fptr2);
+  fclose(fptr_out);
+}

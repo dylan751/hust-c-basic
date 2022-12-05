@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<math.h>
+#include<ctype.h>
+
+int main(int argc, char *argv[]){
+  if(argc != 4){
+    printf("Wrong Syntax! Should be: sde <parameter> <parameter> <parameter>");
+    return 1;
+  }
+
+  double a, b, c;
+  double delta;
+  a = atof(argv[1]);
+  b = atof(argv[2]);
+  c = atof(argv[3]);
+
+  /*Solve the equation*/
+  if(a == 0){
+    if(b == 0){
+      if(c == 0){
+	printf("Equation has countless roots!");//Pt vo so nghiem
+      }
+      else{
+	printf("Impossible equation!");//Pt vo nghiem
+      }
+    }
+    else{
+      printf("The equation has only one root: x = %lf/%lf", -c, b);
+    }
+  }
+  else{
+    delta = b*b - 4*a*c;
+    printf("Equation has two roots: x1 = %lf, x2 = %lf", (-b+sqrt(delta))/(2*a), (-b-sqrt(delta))/(2*a));
+  }
+}

@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<string.h>
+#define CONST 50
+
+int main(){
+  int word_count[26] = {0};
+  char c;
+  int i;
+  char stat[CONST];
+  
+  file_name = "";
+  FILE *fptr = fopen(file_name, "r");
+  if(fptr == NULL){
+    printf("Cannot open %s", file_name);
+    return 1;
+  }
+  else{
+    while((c = fgetc(fptr)) != EOF){
+      if(c < 122 && c > 97){//chu thuong
+	word_count[c-'a']++;
+      }
+      else if(c < 90 && c > 65){//chu hoa
+	word_count[c-'A']++;
+      }
+    }
+
+    for(i = 0; i <= 26; i++){
+      if(word_count[i] > 0){
+	fputs("Letter %c appears %d times.\n",i+'a', word_count[i], fptr); 
+      }
+    }
+
+    fclose(fptr);
+  }
+
+  return 1;
+  
+}

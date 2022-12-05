@@ -1,0 +1,24 @@
+#include<stdio.h>
+
+int main(int argc, char *argv[]){
+  char c;
+
+  if(argc != 3){
+    printf("Wrong Syntax! Should be: apd <file1> <file2>");
+    return 1;
+  }
+  else{
+    FILE *fptr1 = fopen(argv[1], "a");
+    FILE *fptr2 = fopen(argv[2], "r");
+
+    if(fptr1 == NULL){
+      printf("Cannot open %s
+    }
+
+    while((c = fgetc(fptr2)) != EOF){
+      fput(c, fptr1);
+    }
+    fclose(fptr1);
+    fclose(fptr2);
+  }
+}

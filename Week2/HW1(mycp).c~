@@ -1,0 +1,23 @@
+#include<stdio.h>
+#include<string.h>
+
+#define CONSTANT 50
+
+int main(int argc, char *argv[]){
+  char c;
+  if(argc != 3){
+    printf("Wrong Syntax! Should be: mycp <FILE_NAME> <FILE_NAME>");
+    return 1;
+  }
+  else{
+    FILE *fptr1 = fopen(argv[1], "r");
+    FILE *fptr2 = fopen(argv[2], "w");
+
+    while((c = fgetc(fptr1)) != EOF){
+      fput(c, fptr2);
+      putchar(c);
+    }
+    fclose(fptr1);
+    fclose(fptr2);
+  }
+}

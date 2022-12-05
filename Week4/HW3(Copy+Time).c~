@@ -1,0 +1,106 @@
+#include<stdio.h>
+#include<stdio_ext.h>
+#define CONSTANT 200
+
+void copy_by_char(FILE* file1, FILE* file2){
+  int c;
+  while((c = fgetc(file1)) != EOF){
+    fputc(c, file2);
+  }
+}
+
+void copy_by_line(FILE* file1, FILE* file2){
+  char str[CONSTANT];
+  while((fgets(str, CONSTANT, file1)) != NULL){
+      fputs(str, file2);
+  }
+}
+
+void copy_by_block(FILE* file1, FILE* file2){
+  
+}
+
+int main(){
+  char luaChon;
+  FILE* fptr1;
+  FILE* fptr2;
+
+  char file_name1[CONSTANT] = "HW3_in.txt";
+  char file_name2[CONSTANT] = "HW3_out.txt";
+
+  while(luaChon != '4'){
+    printf("|         ======MENU======        |\n"
+	   "|1. Copy by character.            |\n"
+	   "|2. Copy by line.                 |\n"
+	   "|3. Copy by block-optional size.  |\n"
+	   "|4. Exit.                         |\n");
+
+    __fpurge(stdin);
+    printf("Input your choice: ");
+    scanf("%c", &luaChon);
+    while(luaChon < '1' || luaChon > '4'){
+      __fpurge(stdin);
+      printf("Please input a number between 1 and 3: ");
+      scanf("%c", &luaChon);
+    }
+
+    switch(luaChon){
+    case '1': {
+      fptr1 = fopen(file_name1, "r");
+      fptr2 = fopen(file_name2, "w");
+      if(fptr1 == NULL){
+	printf("Cannot open %s.\n", file_name1);
+	return 1;
+      }
+      else if(fptr2 == NULL){
+	printf("Cannot open %s.\n", file_name2);
+	return 1;
+      }
+      else{
+	copy_by_char(fptr1, fptr2);
+      }
+      fclose(fptr1);
+      fclose(fptr2);
+      break;
+    }
+
+    case '2': {
+      fptr1 = fopen(file_name1, "r");
+      fptr2 = fopen(file_name2, "w");
+      if(fptr1 == NULL){
+	printf("Cannot open %s.\n", file_name1);
+	return 1;
+      }
+      else if(fptr2 == NULL){
+	printf("Cannot open %s.\n", file_name2);
+	return 1;
+      }
+      else{
+	copy_by_line(fptr1, fptr2);
+      }
+      fclose(fptr1);
+      fclose(fptr2);
+      break;
+    }
+
+    case '3': {
+      fptr1 = fopen(file_name1, "r");
+      fptr2 = fopen(file_name2, "w");
+      if(fptr1 == NULL){
+	printf("Cannot open %s.\n", file_name1);
+	return 1;
+      }
+      else if(fptr2 == NULL){
+	printf("Cannot open %s.\n", file_name2);
+	return 1;
+      }
+      else{
+	copy_by_block(fptr1, fptr2);
+      }
+      fclose(fptr1);
+      fclose(fptr2);
+      break;
+    }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+#include<stdio.h>
+
+#define CONSTANT 100
+
+typedef struct{
+  int ID;
+  char name[CONSTANT];
+  double price;
+} product;
+
+int main(){
+  product product_array[CONSTANT];
+  char file_name[CONSTANT] = "product.txt";
+  FILE* fptr = fopen(file_name, "r");
+}

@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(int argc, char *argv[]){
+  if(argc != 3){
+    printf("Wrong syntax! Should be: <file_name> <number>");
+    return 1;
+  }
+  else{
+    char c;
+    int x, y;
+
+    x = atoi(argv[2]);//do lech cong
+    while((c = getc(argv[1]) != '\0'){
+	if(c <= 'z'-x || c >= 'a'-x){
+	  c += x;
+	}
+	else if(c > 'z'-x){
+	  y = 'z'-c;
+	  c = 'a';
+	  c += (x-y);
+	}
+	else if(c < 'a'-x){
+	  y = 'a' - c;
+	  c = 'z';
+	  c += (x-y);
+	}
+      }
+  }
+  
+}

@@ -1,0 +1,32 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+char* subStr(char*s1,int offset,int number)
+{
+    char*sub=(char*)calloc(200,sizeof(char));
+    strcpy(sub,s1);
+    if((offset+number)>strlen(s1))
+    {
+        return sub+offset;
+    }
+    if(offset<0||number<0)
+    {
+        printf("Valid input offset or number ! Please try again !__");
+        return NULL;
+    }
+    *(sub+offset+number)='\0';
+    return sub+offset;
+}
+int main()
+{
+  char *str;
+    k=(char*)calloc(200,sizeof(char));
+    int x, n;
+    printf("Enter a string : ");
+    fgets(k,201,stdin);
+    printf("Enter an offset number and number characters u want:__");
+    scanf("%d %d",&x, &n);
+   // strcpy(k,subStr(k,x, n));
+    printf("\n%s",subStr(k,x, n);
+    free(k);
+}

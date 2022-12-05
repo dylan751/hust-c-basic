@@ -1,0 +1,22 @@
+#include<stdio.h>
+
+int main(){
+  char file_name[50] = "class1EF.txt";
+  FILE* fptr = fopen(file_name, "r+");
+  if(fptr == NULL){
+    printf("Cannot open %s", file_name);
+    return 1;
+  }
+  else{
+    char c;
+    while((c = fgetc(fptr)) != EOF){
+      if(c == '\n'){
+	fputc('\n', fptr);
+      }
+    }
+
+    getchar();
+
+    fclose(fptr);
+  }
+}

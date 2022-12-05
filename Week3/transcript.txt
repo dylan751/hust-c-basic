@@ -1,0 +1,7 @@
+Num                 Stu_number          Name                Phone_number        Mark                
+1                   20194530            Nguyen_Hai_Duong    0339410781          3.00                
+2                   20194555            Hoang_Van_Hien      0345695841          4.00                
+3                   20194474            Nguyen_Hoang_Anh    0950674839          5.00                
+4                   20194569            Dinh_Thi_Ngoc_Anh   0495839543          4.00                
+5                   20194579            Tran_Tuan_Anh       0139485765          3.00                
+6                   20194464            Le_Thi_Khanh_Hoa    0284938493          4.00                

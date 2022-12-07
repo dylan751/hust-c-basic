@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+typedef char* element;
+
+void adjust(element list[], int root, int n){
+  int child;
+  element rootkey;
+  element temp;
+  temp = list[root];
+  rootkey = list[root];
+  child = 2*root;
+
+  while(child <= n){
+    if((child < n) && (strcmp(list[child], list[child+1]) < 0)){
+      child++;
+    }
+    if(strcmp(rootkey, list[child]) > 0)
+      break;
+    else{
+      strcpy(list[child/2], list[child]);
+      child *= 2;
+    }
+  }  
+  list[child/2] = temp;
+}
+
+
+//Dang bieu dien cay bang` mang?
+void heapsort(element list[], int n){
+  int i, j;
+  element temp;
+  for(i = n/2; i > 0; i--){
+    adjust(list, i, n);//Ham vun dong
+  }
+  for(i = n-1; i > 0; i--){
+    temp = list[1];
+    list[1] = list[i+1];
+    list[i+1] = temp;
+
+    adjust(list, 1, i);//Ham vun dong
+  }
+
+  for(i = 0; i < n; i++){
+    printf("%15s", list[i]);
+  }
+}

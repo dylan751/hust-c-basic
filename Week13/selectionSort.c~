@@ -1,0 +1,33 @@
+#include<stdio.h>
+
+typedef int elementType;
+
+void selectionSort(elementType arr[], int n){
+  int i, j, min, tmp;
+  for(i = 0; i < n-1; i++){
+    min = i;
+    for(j = i+1; j <= n-1; j++){
+      //Find min
+      if(arr[j] < arr[min])
+	min = j;
+
+      //Swap
+      tmp = arr[i];
+      a[i] = a[min];
+      a[min] = tmp;
+    }
+  }
+}
+
+int main(){
+  elementType arr[10];
+  int i;
+  
+  for(i = 0; i < 10; i++){
+    printf("arr[%d]: ", i);
+    scanf("%d", &arr[i]);
+  }
+
+  selectionSort(arr, 10);
+  return 0;
+}

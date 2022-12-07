@@ -1,0 +1,11 @@
+Nguyen_Hai_Duong 10
+Nguyen_Hoang_Anh 9
+Le_Thi_Khanh_Hoa 3
+Hoang_Van_Hien 8
+Tran_Tuan_Anh 7
+Ha_Van_Duc 6
+Trinh_Quoc_Cong 8
+Ha_Cong_Tuan 9
+Nguyen_Thi_Huong_Ninh 4
+Nguyen_Huy_Linh 5
+Le_Thanh_Giang 9

@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+typedef char ElementType;
+
+typedef struct NodeType
+{
+    ElementType name[20];
+    struct NodeType *left, *right;
+} NodeType;
+
+typedef struct Node
+{
+    NodeType* Element;
+    struct Node *Next;
+} Node;
+
+typedef Node *Position;
+
+typedef struct
+{
+    Position Front, Rear;
+} Queue;
+
+void makeNullQueue(Queue *Q)
+{
+    Q->Front = NULL;
+    Q->Rear = NULL;
+}
+
+Node *makeNewNode(NodeType* e)
+{
+    Node *New = (Node *)malloc(sizeof(Node));
+    New->Next = NULL;
+    New->Element = e;
+    return New;
+}
+
+int isEmptyQueue(Queue Q)
+{
+    return Q.Front == NULL;
+}
+
+void enQueue(NodeType* X, Queue *Q)
+{
+    Node *New = makeNewNode(X);
+
+    if (Q->Front == NULL)
+    {
+        Q->Front = New;
+        Q->Rear = New;
+        return;
+    }
+    Q->Rear->Next = New;
+    Q->Rear = Q->Rear->Next;
+}
+
+NodeType* deQueue(Queue *Q)
+{
+    NodeType *e;
+    Position tmp;
+
+    if (!isEmptyQueue(*Q))
+    {
+        e = Q->Front->Element;
+        tmp = Q->Front;
+        Q->Front = Q->Front->Next;
+        free(tmp);
+        return e;
+    }
+    else
+        printf("Queue NULL!\n");
+}
+
+void freeQueue(Queue *Q)
+{
+    Node *tmp;
+    while (!isEmptyQueue(*Q))
+    {
+        tmp = Q->Front;
+        Q->Front = Q->Front->Next;
+        free(tmp);
+    }
+}

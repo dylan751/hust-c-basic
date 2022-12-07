@@ -1,0 +1,26 @@
+#include<stdio.h>
+
+typdef int elementType;
+
+void insertionSort(elementType arr[], int n){
+  int i, j;
+  element next;
+  for(i = 0; i < n; i++){
+    next = arr[i];
+    for(j = i-1; j >= 0 && next < arr[i]; j--){
+      arr[j+1] = arr[j];
+    }
+    arr[j+1] = next;
+  }
+}
+
+int main(){
+  elementType arr[10];
+  int i;
+  
+  for(i = 0; i < 10; i++){
+    printf("arr[%d]: ", i);
+  }
+
+  insertionSort(arr, 10);
+}

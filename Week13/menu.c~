@@ -1,0 +1,11 @@
+#include<stdio.h>
+#include"binarySearchTree.h"
+
+void importFromText(FILE* fptr, treeType *root){
+  elementType tmp;
+
+  while(!feof(fptr)){
+    fscanf(fptr, "%s %s", tmp.english, tmp.vietnam);
+    insertNode(tmp, *root);
+  }
+}

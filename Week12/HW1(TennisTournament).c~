@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include"binaryTree.h"
+#include<time.h>
+
+int main(){
+  int i = 0;
+  treeType tournament;
+  elementType player[16];// array contains 16 player
+  FILE* fptr = fopen("AUOpen.txt", "r");
+
+  srand(time(NULL));
+  
+  if(fptr == NULL){
+    printf("Cannot open AUOpen.txt\n");
+    return -1;
+  }
+  
+  while(fscanf(fptr, "%d %[^\n]s", &player[i].index, player[i].name) != EOF){
+    player[i].score = rand()%10 +1; //Cho diem ngau nhien tu 1->10
+    printf("%2d %25s %4d\n", player[i].index, player[i].name, player[i].score);
+    i++;
+  }
+
+  makeNullTree(&tournament);
+
+  //Tao node cho 16 player
+  for(i = 0; i < 16; i++){
+    createNode(player[i]);
+  }
+
+  for(i = 0; i < 16; i=i+2){
+    if(player[i].score > player[i+1].score){
+      createFrom2(player[i], createNode(player[i]), createNode(player[i+1]));
+    }
+    else{
+      createFrom2(player[i+1], createNode(player[i]), createNode(player[i+1]));  
+    }
+  }
+  
+  fclose(fptr);
+}

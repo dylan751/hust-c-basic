@@ -1,0 +1,99 @@
+#include "queue_list.h"
+
+NodeType *createNodeTree(char *name)
+{
+    NodeType *N = NULL;
+    N = (NodeType *)malloc(sizeof(NodeType));
+
+    if (N != NULL)
+    {
+        N->left = NULL;
+        N->right = NULL;
+        strcpy(N->name, name);
+    }
+    return N;
+}
+
+typedef NodeType *TreeType;
+
+void freeTree(TreeType *tree)
+{
+    if (*tree != NULL)
+    {
+        freeTree(&((*tree)->left));
+        freeTree(&((*tree)->right));
+        free(*tree);
+    }
+}
+
+void printResult(TreeType T, FILE *fin)
+{
+    if (T->left != NULL && T->right != NULL)
+    {
+        printResult(T->left, fin);
+        printResult(T->right, fin);
+        printf("%s vs %s - %s WIN\n", T->left->name, T->right->name, T->name);
+        fprintf(fin ,"%s vs %s - %s WIN\n", T->left->name, T->right->name, T->name);
+    }
+}
+
+int main(int argc, char const *argv[])
+{
+    srand(time(0));
+    FILE *fin, *fout;
+    Queue Q;
+    TreeType T;
+    makeNullQueue(&Q);
+
+    int count = 0;
+    char name[20];
+
+    NodeType *player1, *player2;
+    NodeType *tmp = NULL;
+    if ((fin = fopen("AUOpen.txt", "r")) == NULL)
+    {
+        printf("Khong the doc file!!!\n");
+        return 1;
+    }
+
+    while (!feof(fin))
+    {
+        fscanf(fin, "%[^\n]%*c", name);
+        tmp = createNodeTree(name);
+        enQueue(tmp, &Q);
+        count++;
+    }
+    fclose(fin);
+
+    if ((fout = fopen("treegame.txt", "w")) == NULL)
+    {
+        printf("Khong the mo file treegame.txt!\n");
+        return 1;
+    }
+
+    while (count > 1)
+    {
+        player1 = deQueue(&Q);
+        player2 = deQueue(&Q);
+        if (rand() % 2 == 0)
+        {
+            tmp = createNodeTree(player1->name);
+        }
+        else
+        {
+            tmp = createNodeTree(player2->name);
+        }
+
+        tmp->left = player1;
+        tmp->right = player2;
+        enQueue(tmp, &Q);
+        count -= 1;
+    }
+
+    T = deQueue(&Q);
+    freeQueue(&Q);
+
+    //printResult(T, fin);
+    freeTree(&T);
+    return 0;
+}

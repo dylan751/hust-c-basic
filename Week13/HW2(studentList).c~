@@ -1,0 +1,18 @@
+#include"BST_For_HW2"
+
+int main(){
+  elementType stu;
+  TreeType root;
+  FILE* fptr = fopen("DSSV.txt", "r");
+  if(fptr == NULL){
+    printf("Cannot open DSSV.txt\n");
+    return 0;
+  }
+
+  while(fscanf(fptr, "%s\t%d", stu.name, &stu.grade) != EOF){
+    insertNode(stu, &root);
+  }
+
+
+  
+}

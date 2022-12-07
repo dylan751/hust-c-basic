@@ -1,0 +1,17 @@
+#include<stdio.h>
+#include"binarySearchTree.h"
+
+int main(){
+  int arr[10];
+  int i;
+  for(i = 0; i < 10; i++){
+    arr[i] = 2*i + 1;
+  }
+  treeType root;
+
+  makeNullTree(root);
+  for(i = 0; i < 10; i++){
+    createNode(arr[i]);
+  }
+  
+}

@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<string.h>
+#define MAX 20
+
+typedef struct phoneaddress_t{
+  char name[20];
+  char tel[11];
+  char email[25];
+}phoneaddress;
+
+typedef phoneaddress elementType;
+
+typedef struct node{
+  elementType element;
+  struct node *left, *right;
+}nodeType;
+
+typedef nodeType* treeType;
+
+treeType search(char* email, treeType root){
+  if(root == NULL)
+    return NULL;
+  else if(strcmp((root->element).email, email) ==0)//Found
+    return root;
+  else if(strcmp((root->element).email, email) < 0)//Continue searching in the right sub tree
+    return search(email, root->right);
+  else{//Continue searching in the left sub tree
+    return search(email, root->left);
+  }
+}
+
+void insertNode(elementType x, treeType *root){
+  if(*root == NULL){
+    *root = (nodeType*)malloc(sizeof(nodeType));
+    (*root)->element = x;
+    (*root)->left = NULL;
+    (*root)->right = NULL;
+  }
+  else if(strcmp(x, (*root)->element) < 0){
+    insertNode(x, &(*root)->left);
+  }
+  else insertNode(x, &(*root)->right);
+}

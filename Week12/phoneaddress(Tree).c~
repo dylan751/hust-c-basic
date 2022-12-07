@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#define MAX 20
+
+typedef struct phoneaddress_t{
+  char name[20];
+  char tel[11];
+  char email[25];
+}phoneaddress;
+
+typedef phoneaddress elementType;
+
+typedef struct node{
+  elementType element;
+  struct node *left, *right;
+}nodeType;
+
+typedef nodeType* treeType;
+
+treeType search(char* email, treeType root){
+  if(root == NULL)
+    return NULL;
+  else if(strcmp((root->element).email, email) ==0)//Found
+    return root;
+  else if(strcmp((root->element).email, email) < 0)//Continue searching in the right sub tree
+    return search(email, root->right);
+  else{//Continue searching in the left sub tree
+    return search(email, root->left);
+  }
+}
+
+void insertNode(elementType x, treeType *root){
+  if(*root == NULL){
+    *root = (nodeType*)malloc(sizeof(nodeType));
+    (*root)->element = x;
+    (*root)->left = NULL;
+    (*root)->right = NULL;
+  }
+  else if(strcmp(x.email, (*root)->element.email) < 0){
+    insertNode(x, &(*root)->left);
+  }
+  else insertNode(x, &(*root)->right);
+}
+
+
+int main(){
+  FILE* fptr;
+  elementType phonearr[MAX];
+  treeType root;
+  int i, n = 10;//return code
+
+  //Read from this file to array
+  if((fptr = fopen("phonebook.dat", "rb")) == NULL){
+    printf("Cannot open file phonebook.dat\n");
+    return -1;
+  }
+  
+  for(i = 0; i < n; i++){
+    root = insertNode(phonearr[i], root);
+  }
+  
+  
+  fclose(fp);
+}
+
